@@ -1,27 +1,8 @@
 <?php
-/**
- * amadeus-ws-client
- *
- * Copyright 2015 Amadeus Benelux NV
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * @package Amadeus
- * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
- */
 
 namespace Amadeus\Client\Struct\Service;
 
+use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\SegmentInfo;
 use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
 use Amadeus\Client\Struct\Air\PointDetails;
 use Amadeus\Client\Struct\BaseWsMessage;
@@ -67,104 +48,50 @@ class StandaloneCatalogue extends BaseWsMessage
 
     public function __construct(ServiceStandaloneCatalogueOptions $options)
     {
-        $travelProductInformation = new TravelProductInformation();
-        $travelProductInformation->boardPointDetails = new PointDetails($options->getBoardPointDetailsTrueLocationId());
-        $travelProductInformation->offpointDetails = new PointDetails($options->getOffPointDetailsTrueLocationId());
-        $travelProductInformation->flightDate = new ProductDateTime($options->getDepartureDate(), $options->getDepartureTime());
-        $travelProductInformation->flightIdentification = new ProductIdentificationDetail($options->getFlightNumber(), $options->getBookingClass());
-        $travelProductInformation->companyDetails = new CompanyIdentification($options->getMarketingCompany(), $options->getOperatingCompany());
-        $travelProductInformation->flightTypeDetails[] = $options->getFlightIndicator();
+//        $travelProductInformation = new TravelProductInformation();
+//        $travelProductInformation->boardPointDetails = new PointDetails($options->getBoardPointDetailsTrueLocationId());
+//        $travelProductInformation->offpointDetails = new PointDetails($options->getOffPointDetailsTrueLocationId());
+//        $travelProductInformation->flightDate = new ProductDateTime($options->getDepartureDate(), $options->getDepartureTime());
+//        $travelProductInformation->flightIdentification = new ProductIdentificationDetail($options->getFlightNumber(), $options->getBookingClass());
+//        $travelProductInformation->companyDetails = new CompanyIdentification($options->getMarketingCompany(), $options->getOperatingCompany());
+//        $travelProductInformation->flightTypeDetails[] = $options->getFlightIndicator();
+//        $travelProductInformation->itemNumber = 1;
 
         $pricingOption = new PricingOption();
-        $pricingOption->pricingOptionKey = new PricingOptionKey(PricingOptionKey::OVERRIDE_NO_OPTION);
-        $pricingOption->optionDetail[] = new AttributeInformation($options->getAttributeType());
+        $pricingOption->pricingOptionKey = new PricingOptionKey('FAR');
+        $pricingOption->optionDetail[] = new AttributeInformation($options->getAttributeType(), $options->getAttributeDescription());
 
-        $flightInfo = new FlightInfo($travelProductInformation);
+//        $flightInfo = new FlightInfo($travelProductInformation);
 
 
         $passengerInfo = new PassengerInfo();
         $passengerInfo->fareInfo = new FareInformation($options->getFareInfoValueQualifier());
-        $passengerInfo->specificTravellerDetails = new SpecificTraveller([ new SpecificTravellerDetail('1', '2', '3') ]);
+        $passengerInfo->specificTravellerDetails = new SpecificTraveller(new SpecificTravellerDetail('1'));
 
 
-        $this->flightInfo[] = $flightInfo;
+        $this->flightInfo = $this->buildFlightInfo($options);
         $this->pricingOption[] = $pricingOption;
         $this->passengerInfoGroup[] = $passengerInfo;
     }
 
-    /**
-     * @return PassengerInfo[]|array
-     */
-    public function getPassengerInfoGroup()
+    public function buildFlightInfo(ServiceStandaloneCatalogueOptions $options)
     {
-        return $this->passengerInfoGroup;
-    }
+        $flightInfo = [];
 
-    /**
-     * @param PassengerInfo $passengerInfoGroup
-     * @return StandaloneCatalogue
-     */
-    public function addPassengerInfoGroup($passengerInfoGroup)
-    {
-        $this->passengerInfoGroup[] = $passengerInfoGroup;
+        /** @var SegmentInfo $segmentInfo */
+        foreach ($options->getSegmentInfo() as $key => $segmentInfo) {
+            $travelProductInformation = new TravelProductInformation();
+            $travelProductInformation->boardPointDetails = new PointDetails($segmentInfo->getBoardPointDetailsTrueLocationId());
+            $travelProductInformation->offpointDetails = new PointDetails($segmentInfo->getOffPointDetailsTrueLocationId());
+            $travelProductInformation->flightDate = new ProductDateTime($segmentInfo->getDepartureDate(), $segmentInfo->getDepartureTime());
+            $travelProductInformation->flightIdentification = new ProductIdentificationDetail($segmentInfo->getFlightNumber(), $segmentInfo->getBookingClass());
+            $travelProductInformation->companyDetails = new CompanyIdentification($segmentInfo->getMarketingCompany(), $segmentInfo->getOperatingCompany());
+            $travelProductInformation->flightTypeDetails[] = $segmentInfo->getFlightIndicator();
+            $travelProductInformation->itemNumber = $key + 1;
 
-        return $this;
-    }
+            $flightInfo[] = new FlightInfo($travelProductInformation);
+        }
 
-    /**
-     * @return FlightInfo[]|array
-     */
-    public function getFlightInfo()
-    {
-        return $this->flightInfo;
-    }
-
-    /**
-     * @param FlightInfo $flightInfo
-     * @return StandaloneCatalogue
-     */
-    public function addFlightInfo($flightInfo)
-    {
-        $this->flightInfo[] = $flightInfo;
-
-        return $this;
-    }
-
-    /**
-     * @return ServiceRequestDetail[]|array
-     */
-    public function getFeeDetailsInfoGroup()
-    {
-        return $this->feeDetailsInfoGroup;
-    }
-
-    /**
-     * @param ServiceRequestDetail $feeDetailsInfoGroup
-     * @return StandaloneCatalogue
-     */
-    public function addFeeDetailsInfoGroup($feeDetailsInfoGroup)
-    {
-        $this->feeDetailsInfoGroup[] = $feeDetailsInfoGroup;
-
-        return $this;
-    }
-
-    /**
-     * @return PricingOption[]|array
-     */
-    public function getPricingOption()
-    {
-        return $this->pricingOption;
-    }
-
-    /**
-     * @param PricingOption $pricingOption
-     * @return StandaloneCatalogue
-     */
-    public function setPricingOption($pricingOption)
-    {
-        $this->pricingOption[] = $pricingOption;
-
-        return $this;
+        return $flightInfo;
     }
 }

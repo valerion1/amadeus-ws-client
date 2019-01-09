@@ -32,7 +32,7 @@ class SpecificTravellerDetail
      * @param string $surname
      * @param string $firstName
      */
-    public function __construct($referenceNumber, $surname, $firstName)
+    public function __construct($referenceNumber, $surname = null, $firstName = null)
     {
         $this->referenceNumber = $referenceNumber;
         $this->surname = $surname;

@@ -8,13 +8,13 @@ class SpecificTraveller
     /**
      * Traveller details
      *
-     * @property SpecificTravellerDetail|array $travellerDetails
+     * @property SpecificTravellerDetail $travellerDetails
      */
     public $travellerDetails;
 
     /**
      * SpecificTraveller constructor.
-     * @param $travellerDetails
+     * @param SpecificTravellerDetail $travellerDetails
      */
     public function __construct($travellerDetails)
     {

@@ -2,16 +2,15 @@
 
 namespace Amadeus\Client\Struct\Service\StandaloneCatalogue;
 
-use Amadeus\Client\Struct\DocRefund\UpdateRefund\DateTimeInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\Currency;
+use Amadeus\Client\Struct\Fare\PricePnr13\LocationInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\FormOfPaymentInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\FrequentTravellerDetails;
-use Amadeus\Client\Struct\Fare\PricePnr13\LocationInformation;
 use Amadeus\Client\Struct\Service\IntegratedPricing\PricingOptionKey;
+use Amadeus\Client\Struct\DocRefund\UpdateRefund\DateTimeInformation;
 use Amadeus\Client\Struct\Service\IntegratedPricing\TicketInformation;
-use Amadeus\Client\Struct\Service\StandaloneCatalogue\PricingOption\AttributeInformation;
-use Amadeus\Client\Struct\Service\StandaloneCatalogue\PricingOption\AttributeInformationTypeUType;
 use Amadeus\Client\Struct\Service\StandaloneCatalogue\PricingOption\ReferencingDetail;
+use Amadeus\Client\Struct\Service\StandaloneCatalogue\PricingOption\AttributeInformation;
 use Amadeus\Client\Struct\Service\StandaloneCatalogue\PricingOption\TransportIdentifierType;
 
 /**
@@ -59,7 +58,7 @@ class PricingOption
      *
      * @property FrequentTravellerDetails[]|array $frequentFlyerInformation
      */
-    public $frequentFlyerInformation = [];
+    public $frequentFlyerInformation = null;
 
     /**
      * in case the option deals with Form Of Payment

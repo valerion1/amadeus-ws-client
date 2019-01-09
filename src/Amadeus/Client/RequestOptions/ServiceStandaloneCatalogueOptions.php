@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\RequestOptions;
 
+use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\SegmentInfo;
+
 /**
  * Service_StandaloneCatalogue Request Options
  *
@@ -30,181 +32,38 @@ namespace Amadeus\Client\RequestOptions;
  */
 class ServiceStandaloneCatalogueOptions extends Base
 {
-    private $boardPointDetailsTrueLocationId;
-    private $offPointDetailsTrueLocationId;
-    private $departureDate;
-    private $departureTime;
-    private $flightNumber;
-    private $bookingClass;
-    private $marketingCompany;
-    private $operatingCompany;
-    private $flightIndicator;
+
+    /**
+     * @var array|SegmentInfo[]
+     */
+    private $segmentInfo;
+
+
+
     private $attributeType;
+    private $attributeDescription;
     private $otherCompany;
     private $valueQualifier;
     private $carrier;
     private $fareInfoValueQualifier;
 
     /**
-     * @return mixed
-     */
-    public function getBoardPointDetailsTrueLocationId()
-    {
-        return $this->boardPointDetailsTrueLocationId;
-    }
-
-    /**
-     * @param mixed $boardPointDetailsTrueLocationId
+     * @param SegmentInfo $segmentInfo
      * @return ServiceStandaloneCatalogueOptions
      */
-    public function setBoardPointDetailsTrueLocationId($boardPointDetailsTrueLocationId)
+    public function addSegmentInfo(SegmentInfo $segmentInfo)
     {
-        $this->boardPointDetailsTrueLocationId = $boardPointDetailsTrueLocationId;
+        $this->segmentInfo[] = $segmentInfo;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return SegmentInfo[]|array
      */
-    public function getOffPointDetailsTrueLocationId()
+    public function getSegmentInfo()
     {
-        return $this->offPointDetailsTrueLocationId;
-    }
-
-    /**
-     * @param mixed $offPointDetailsTrueLocationId
-     * @return ServiceStandaloneCatalogueOptions
-     */
-    public function setOffPointDetailsTrueLocationId($offPointDetailsTrueLocationId)
-    {
-        $this->offPointDetailsTrueLocationId = $offPointDetailsTrueLocationId;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDepartureDate()
-    {
-        return $this->departureDate;
-    }
-
-    /**
-     * @param mixed $departureDate
-     * @return ServiceStandaloneCatalogueOptions
-     */
-    public function setDepartureDate($departureDate)
-    {
-        $this->departureDate = $departureDate;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDepartureTime()
-    {
-        return $this->departureTime;
-    }
-
-    /**
-     * @param mixed $departureTime
-     * @return ServiceStandaloneCatalogueOptions
-     */
-    public function setDepartureTime($departureTime)
-    {
-        $this->departureTime = $departureTime;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFlightNumber()
-    {
-        return $this->flightNumber;
-    }
-
-    /**
-     * @param mixed $flightNumber
-     * @return ServiceStandaloneCatalogueOptions
-     */
-    public function setFlightNumber($flightNumber)
-    {
-        $this->flightNumber = $flightNumber;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBookingClass()
-    {
-        return $this->bookingClass;
-    }
-
-    /**
-     * @param mixed $bookingClass
-     * @return ServiceStandaloneCatalogueOptions
-     */
-    public function setBookingClass($bookingClass)
-    {
-        $this->bookingClass = $bookingClass;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMarketingCompany()
-    {
-        return $this->marketingCompany;
-    }
-
-    /**
-     * @param mixed $marketingCompany
-     * @return ServiceStandaloneCatalogueOptions
-     */
-    public function setMarketingCompany($marketingCompany)
-    {
-        $this->marketingCompany = $marketingCompany;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOperatingCompany()
-    {
-        return $this->operatingCompany;
-    }
-
-    /**
-     * @param mixed $operatingCompany
-     * @return ServiceStandaloneCatalogueOptions
-     */
-    public function setOperatingCompany($operatingCompany)
-    {
-        $this->operatingCompany = $operatingCompany;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFlightIndicator()
-    {
-        return $this->flightIndicator;
-    }
-
-    /**
-     * @param mixed $flightIndicator
-     * @return ServiceStandaloneCatalogueOptions
-     */
-    public function setFlightIndicator($flightIndicator)
-    {
-        $this->flightIndicator = $flightIndicator;
-        return $this;
+        return $this->segmentInfo;
     }
 
     /**
@@ -294,6 +153,24 @@ class ServiceStandaloneCatalogueOptions extends Base
     public function setFareInfoValueQualifier($fareInfoValueQualifier)
     {
         $this->fareInfoValueQualifier = $fareInfoValueQualifier;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAttributeDescription()
+    {
+        return $this->attributeDescription;
+    }
+
+    /**
+     * @param mixed $attributeDescription
+     * @return ServiceStandaloneCatalogueOptions
+     */
+    public function setAttributeDescription($attributeDescription)
+    {
+        $this->attributeDescription = $attributeDescription;
         return $this;
     }
 
