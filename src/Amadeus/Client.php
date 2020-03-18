@@ -628,6 +628,26 @@ class Client extends Base
         return $this->callMessage($msgName, $options, $messageOptions);
     }
 
+
+    /**
+     * Fare_MetaPricerTravelBoardSearch
+     *
+     * @param RequestOptions\FareMetaPricerTbSearch $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function fareMetaPricerTravelBoardSearch(
+        RequestOptions\FareMetaPricerTbSearch $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Fare_MetaPricerTravelBoardSearch';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
     /**
      * Fare_PricePnrWithBookingClass
      *

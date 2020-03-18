@@ -33,7 +33,7 @@ use Amadeus\Client\Struct\Fare\MasterPricer;
 /**
  * Fare_MasterPricerTravelBoardSearch message structure
  *
- * Also used for Fare_MasterPricerCalendar and Ticket_ATCShopperMasterPricerTravelBoardSearch
+ * Also used for Fare_MasterPricerCalendar, Ticket_ATCShopperMasterPricerTravelBoardSearch, Fare_MetaPricerTravelBoardSearch
  *
  * @package Amadeus\Client\Struct\Fare
  * @author Dieter Devlieghere <dermikagh@gmail.com>
